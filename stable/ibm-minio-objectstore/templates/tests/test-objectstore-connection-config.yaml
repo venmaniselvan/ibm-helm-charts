@@ -1,0 +1,28 @@
+###############################################################################
+# Licensed Materials - Property of IBM
+# 5737-E67
+# (C) Copyright IBM Corporation 2016, 2018 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure
+# restricted by GSA ADP Schedule Contract with IBM Corp.
+###############################################################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "minio.fullname" . }}-test-config
+  labels:
+    app: {{ template "minio.fullname" . }}-test
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  test-minio.sh: |
+    #!/bin/sh
+    set -e
+    CONFIG_MC_PATH={{ .Values.configPathmc }}
+    if [[ ${TLS_ENABLED} == "true" ]]; then
+      echo "mc -C $CONFIG_MC_PATH config host add test https://{{ template "minio.fullname" . }}:{{ .Values.service.port }} \${MINIO_ACCESS_KEY} \${MINIO_SECRET_KEY} S3v4 --insecure"
+      mc -C $CONFIG_MC_PATH config host add test https://{{ template "minio.fullname" . }}:{{ .Values.service.port }}  ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY}  S3v4 --insecure
+    else
+      echo "mc -C $CONFIG_MC_PATH config host add test http://{{ template "minio.fullname" . }}:{{ .Values.service.port }} \${MINIO_ACCESS_KEY} \${MINIO_SECRET_KEY} S3v4"
+      mc -C $CONFIG_MC_PATH config host add test http://{{ template "minio.fullname" . }}:{{ .Values.service.port }}  ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY}  S3v4
+    fi

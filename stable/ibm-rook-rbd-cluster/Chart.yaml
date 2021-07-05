@@ -1,0 +1,27 @@
+###############################################################################
+# Licensed Materials - Property of IBM
+# 5737-E67
+# (C) Copyright IBM Corporation 2016, 2018 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure
+# restricted by GSA ADP Schedule Contract with IBM Corp.
+###############################################################################
+apiVersion: v1
+appVersion: "1.0"
+description: This chart deploys Rook Ceph storage cluster.
+name: ibm-rook-rbd-cluster
+version: 0.8.3
+tillerVersion: '>=2.9.1'
+kubeVersion: '>=1.11.0'
+keywords:
+- Beta
+- storage
+- Tech
+- amd64
+- OpenSource
+- ICP
+- Storage
+home: https://rook.io/
+icon: https://rook.io/images/logos/rook/rook-logo-color-on-transparent.png
+source: https://github.com/rook/rook
+maintainers:
+- name: IBM Cloud Private Storage Squad

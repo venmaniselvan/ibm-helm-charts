@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "ibm-netcool-piagent-prometheus-dev.servicename" .  }}
+  labels:
+    app.kubernetes.io/name: {{ template "ibm-netcool-piagent-prometheus-dev.name" . }}
+    chart: {{ .Chart.Name }}
+    helm.sh/chart: {{ .Release.Name }}-{{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    release: {{ .Release.Service }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 11000
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ template "ibm-netcool-piagent-prometheus-dev.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name  }}
+    

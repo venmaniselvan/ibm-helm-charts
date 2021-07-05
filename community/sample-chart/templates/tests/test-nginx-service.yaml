@@ -1,0 +1,38 @@
+{{- $chartName := include "sample.chart.name" . }}
+{{- $chartFullName := include "sample.chart.fullname" . }}
+# Example helm test - verify nginx server is running (can download index.html)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $chartName }}-test
+  annotations:
+    "helm.sh/hook": test-success
+  labels: 
+    app: "{{ $chartName }}-test"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    component: "test"
+spec:
+  hostNetwork: false
+  hostPID: false
+  hostIPC: false
+  securityContext:
+    {{/* alpine requires a root user.  Charts should not typically run with root. */}}
+    runAsNonRoot: false
+    runAsUser: 0
+  containers:
+  - name: "{{ $chartName }}-test"
+    image: alpine:3.6
+    command: ['wget']
+    args:  ['{{ $chartFullName }}:{{ .Values.service.externalPort }}']
+    securityContext:
+      privileged: false
+      readOnlyRootFilesystem: false
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+  restartPolicy: Never 
+  affinity:
+  {{- include "nodeaffinity" . | indent 6 }}   

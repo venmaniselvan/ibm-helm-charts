@@ -1,0 +1,157 @@
+## Metadata for <PRODUCNAME> configuration
+## This metadata is used to augment the value.yaml to drive IBM Cloud Private UI for configuration of the Helm chart installation
+     
+## Replica count configuration metadata
+replicaCount: 
+  __metadata:
+    name: "replicaCount"
+    label: "Replica Count"
+    description: "Deployment replicaCount - optional field dependent on workload"
+    type: "number"
+    immutable: false
+    required: false
+
+## Arch metadata for github.com charts
+arch:
+  __metadata:
+    label: "Architecture scheduling preferences"
+    description: "Architecture label for configuration"
+  amd64:
+    __metadata:
+      name: "amd64"
+      label: "amd64"
+      description: "Architecture preference for target worker node."
+      type: "string"
+      immutable: false
+      required: true
+      options:
+      - label: "3 - Most preferred"
+        value: "3 - Most preferred"  
+
+## Image configuration metadata
+image:
+  __metadata:
+    label: "Images"
+    description: "Image label for configuration"
+  repository:
+    __metadata:
+      name: "repository"
+      label: "repository"
+      description: "Docker image location"
+      type: "string"
+      immutable: false
+      required: true
+  pullPolicy:
+    __metadata:
+      name: "pullPolicy"
+      label: "Docker image pull policy"
+      description: "Always, Never, or IfNotPresent. Defaults to Always"
+      type: "string"
+      immutable: false
+      required: true
+      options:
+      - label: "Always"
+        value: "Always"
+      - label: "Never"
+        value: "Never"
+      - label: "IfNotPresent"
+        value: "IfNotPresent"  
+  tag: 
+    __metadata:
+      name: "Docker image Tag"
+      label: "Docker image Tag"
+      description: "This is a record of the docker image"
+      type: "string"
+      immutable: false
+      required: true
+  
+## Service configuration metadata
+service:
+  __metadata:
+    label: "Service"
+    description: "Service label for configuration"
+  type: 
+    __metadata:
+      name: "Type"
+      label: "Service Type"
+      description: "This is the Service Type"
+      type: "string"
+      immutable: false
+      required: true
+      options:
+        - label: "Cluster IP"
+          value: "ClusterIP"
+        - label: "Node Port"
+          value: "NodePort"
+  externalPort: 
+    __metadata:
+      name: "externalPort"
+      label: "External port"
+      description: "This is the external port number"
+      type: "number"
+      immutable: false
+      required: true
+
+## Ingress configuration enablement metadata
+ingress:
+  __metadata:
+    label: "Ingress"
+    description: "Ingress label for configuration"
+  enabled: 
+    __metadata: 
+      label: "Ingress Enabled" 
+      description: "This option enables boolean ingress"
+      type: "boolean"
+      required: true
+  hosts:
+      __metadata:
+        label: "Host location for the chart"
+        description: "Helps identify placement of chart"
+        type: "string"
+        required: true
+  annotations:
+    __metadata:
+      label: "Annotation method for ingress"
+      description: "This annoatates ingress records"
+      type: "string"
+      required: false
+  tls:
+    __metadata:
+      label: "tls method for ingress"
+      description: "This helps with generating ingress secrets"
+      type: "string"
+      required: false
+
+
+## Resource requests and limits configuration metadata
+resources:
+  __metadata:
+    description: "Resource settings"
+    label: "Resources"
+    description: "Resource label for configuration"
+  requests:
+    cpu: 
+      __metadata: 
+        label: "CPU request"
+        description: "The requested CPU"
+        type: "string"
+        required: true   
+    memory: 
+      __metadata: 
+        label: "Memory request"
+        description: "The memory request"
+        type: "string"
+        required: true   
+  limits:
+    cpu: 
+      __metadata: 
+        label: "CPU limit"
+        description: "The CPU limit"
+        type: "string"
+        required: true   
+    memory: 
+      __metadata: 
+        label: "Memory limit"
+        description: "The memory limit"
+        type: "string"
+        required: true   

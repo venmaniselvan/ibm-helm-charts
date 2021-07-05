@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap 
+metadata:
+  name: {{ template "sample.chart.fullname" . }}-config
+  labels:
+    app: {{ template "sample.chart.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  index.html: | 
+    Default web page created by pre-install helm hook configMap 
